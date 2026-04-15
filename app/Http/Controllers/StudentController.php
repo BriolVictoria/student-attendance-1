@@ -6,6 +6,7 @@ use App\Models\Student;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 
 class StudentController extends Controller
 {
@@ -30,18 +31,19 @@ class StudentController extends Controller
         );
     }
 
-    public function store(): RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
+        // Valider des données transmises dans la requête
+        $validated = $request->validate([
+            'first_name' => 'required|max:255',
+            'last_name' => 'required|max:255',
+            'email' => 'required|email|unique:students,email',
+            'matricule' => 'required|integer|digits:10',
+            'birth_date' => 'nullable|date',
+        ]);
+
         // Stocker un étudiant en DB
-        $student = new Student;
-
-        $student->first_name = $_POST['first_name'];
-        $student->last_name = $_POST['last_name'];
-        $student->email = $_POST['email'];
-        $student->matricule = $_POST['matricule'];
-        $student->birth_date = empty($_POST['birth_date']) ? null : $_POST['birth_date'];
-
-        $student->save();
+        $student = Student::create($validated);
 
         // Demander au navigateur de se rediriger vers la page de résultat souhaitée
         return redirect()->route('students.show', $student);
@@ -49,7 +51,7 @@ class StudentController extends Controller
 
     public function show(Student $student): View|Factory
     {
-        $title = 'La fiche de '.$student->first_name;
+        $title = 'La fiche de ' . $student->first_name;
 
         return view('students.show',
             compact(
@@ -62,7 +64,7 @@ class StudentController extends Controller
 
     public function edit(Student $student): View|Factory
     {
-        $title = 'La fiche de '.$student->first_name;
+        $title = 'La fiche de ' . $student->first_name;
 
         return view('students.edit',
             compact(
