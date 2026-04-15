@@ -15,35 +15,35 @@
     >
         @csrf
         <div>
-            <label for="first-name">Prénom <sup>*</sup></label>
+            <label for="first-name">{{ ucfirst(__('form-labels.first_name')) }} <sup>*</sup></label>
             <input id="first-name" name="first_name" type="text" value="{{ old('first_name') }}" placeholder="Jean" required>
             @error('first_name')
             <p class="alert alert-warning">{{ $message }}</p>
             @enderror
         </div>
         <div>
-            <label for="family-name">Nom de famille <sup>*</sup></label>
+            <label for="family-name">{{ ucfirst(__('form-labels.last_name')) }} <sup>*</sup></label>
             <input id="family-name" name="last_name" type="text" value="{{ old('last_name') }}" placeholder="Valjean" required>
             @error('last_name')
             <p class="alert alert-warning">{{ $message }}</p>
             @enderror
         </div>
         <div>
-            <label for="email">Email <sup>*</sup></label>
+            <label for="email">{{ ucfirst(__('form-labels.email')) }} <sup>*</sup></label>
             <input id="email" name="email" type="email" value="{{ old('email') }}" placeholder="jean.valjean@miserables.fr" required>
             @error('email')
             <p class="alert alert-warning">{{ $message }}</p>
             @enderror
         </div>
         <div>
-            <label for="matricule">Matricule (10 chiffres) <sup>*</sup></label>
+            <label for="matricule">{{ ucfirst(__('form-labels.matricule')) }} <sup>*</sup></label>
             <input id="matricule" name="matricule" type="number" value="{{ old('matricule') }}" placeholder="7340123491" required>
             @error('matricule')
             <p class="alert alert-warning">{{ $message }}</p>
             @enderror
         </div>
         <div>
-            <label for="birth-date">Date de naissance</label>
+            <label for="birth-date">{{ ucfirst(__('form-labels.birth_date')) }}</label>
             <input id="birth-date" name="birth_date" type="date" value="{{ old('birth_date') }}">
             @error('birth_date')
             <p class="alert alert-warning">{{ $message }}</p>
