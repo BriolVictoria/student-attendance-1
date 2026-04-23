@@ -92,7 +92,7 @@ it(
 
 it(
     'displays a login link to a guest user on the home page',
-    function(){
+    function () {
         $response = get(route('pages.home'));
         $response->assertSeeHtml('<a href="'.
             route('login').

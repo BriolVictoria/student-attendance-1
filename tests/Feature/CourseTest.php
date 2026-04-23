@@ -1,12 +1,10 @@
 <?php
 
-
-use App\Models\User;
 use App\Models\Course;
+use App\Models\User;
+
 use function Pest\Laravel\actingAs;
-use function Pest\Laravel\assertAuthenticated;
 use function Pest\Laravel\get;
-use function Pest\Laravel\post;
 
 test(
     'an authenticated user sees his courses after he logs in',
