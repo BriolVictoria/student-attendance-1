@@ -196,7 +196,7 @@ return [
     */
 
     'attributes' => [
-        'first_name' => 'prénom'
+        'first_name' => 'prénom',
     ],
 
 ];

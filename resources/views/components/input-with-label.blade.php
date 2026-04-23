@@ -12,9 +12,9 @@
             <sup>*</sup>
         @endif
     </label>
-    <input id="{{ $id }}"
+    <input type="{{ $type }}"
+           id="{{ $id }}"
            name="{{ $name }}"
-           type="{{ $type }}"
            value="{{ $value }}"
            @if($placeholder) placeholder="{{ $placeholder }}" @endif
            @if($required) required @endif

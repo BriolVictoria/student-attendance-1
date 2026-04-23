@@ -1,4 +1,5 @@
 <?php
+
 return [
-    'the_student' => 'the student'
+    'the_student' => 'the student',
 ];
