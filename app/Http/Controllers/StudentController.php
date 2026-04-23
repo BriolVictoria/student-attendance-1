@@ -51,7 +51,7 @@ class StudentController extends Controller
 
     public function show(Student $student): View|Factory
     {
-        $title = 'La fiche de ' . $student->first_name;
+        $title = 'La fiche de '.$student->first_name;
 
         return view('students.show',
             compact(
@@ -64,7 +64,7 @@ class StudentController extends Controller
 
     public function edit(Student $student): View|Factory
     {
-        $title = 'La fiche de ' . $student->first_name;
+        $title = 'La fiche de '.$student->first_name;
 
         return view('students.edit',
             compact(
