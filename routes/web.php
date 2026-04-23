@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\CourseController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
@@ -50,5 +51,10 @@ Route::middleware('auth')->group(function () {
         StudentController::class,
         'destroy',
     ])->name('students.destroy');
+
+    Route::get('/courses', [
+        CourseController::class,
+        'index'
+    ])->name('courses.index');
 });
 

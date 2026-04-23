@@ -9,8 +9,10 @@ use function Pest\Laravel\get;
 test(
     'an authenticated user sees his courses after he logs in',
     function () {
+        // Arrange
         $dominique = User::factory()->create();
         $daniel = User::factory()->create();
+
         $pw = Course::factory()->create([
             'name' => 'Projets Web',
             'code' => 'PW',
@@ -31,7 +33,11 @@ test(
         ]);
 
         actingAs($dominique);
+
+        // Act
         $response = get(route('courses.index'));
+
+        // Assert
         $response->assertStatus(200);
         $response->assertSeeInOrder([$dcs->name, $pw->name]);
         $response->assertDontSee($mmi->name);
