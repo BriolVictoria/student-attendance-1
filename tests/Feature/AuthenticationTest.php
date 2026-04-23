@@ -16,8 +16,8 @@ it(
         // Assert
         $response->assertStatus(200);
         $response->assertSeeHtml(
-            '<form action="'.
-            route('login.store').
+            '<form action="' .
+            route('login.store') .
             '" method="post"'
         );
         $response->assertSee('Connexion à votre espace privé');
@@ -29,7 +29,8 @@ it(
         ]);
     });
 
-it('redirects an successfully authenticated user to the predifined home page',
+it(
+    'redirects a successfully authenticated user to the predefined home page',
     function () {
         // Arrange
         $userData = [
@@ -53,14 +54,25 @@ it('redirects an successfully authenticated user to the predifined home page',
 it(
     'redirects a guest to the login route when he tries to access an auth only route',
     function () {
-        $response = get(route('students.index'));
-        $response->assertRedirect(
-            route('login')
-        );
+        $authRoutes =
+            collect(Route::getRoutes())
+                ->filter(
+                    fn($route) => in_array('auth', $route->gatherMiddleware())
+                );
+
+        expect($authRoutes->count())
+            ->toBeGreaterThan(0);
+
+        foreach ($authRoutes as $route) {
+            $methods = $route->methods();
+            $method = strtolower($methods[0]);
+            $response = $this->$method($route->uri);
+            $response->assertRedirect(route('login'));
+        }
     });
 
 it(
-    'allows an authenticated user to logout',
+    'displays a logout button to an authenticated user',
     function () {
         // Arrange
         actingAs(User::factory()->create());
@@ -70,8 +82,8 @@ it(
 
         // Assert
         $response->assertSeeHtmlInOrder([
-            '<form action="'.
-            route('logout').
+            '<form action="' .
+            route('logout') .
             '" method="post"',
             '<input type="hidden" name="_token"',
             '<button type="submit"',
@@ -94,15 +106,15 @@ it(
     'displays a login link to a guest user on the home page',
     function () {
         $response = get(route('pages.home'));
-        $response->assertSeeHtml('<a href="'.
-            route('login').
+        $response->assertSeeHtml('<a href="' .
+            route('login') .
             '"');
         $response->assertSee(ucfirst(__('actions.logmein')));
 
         actingAs(User::factory()->create());
         $response = get(route('pages.home'));
-        $response->assertDontSeeHtml('<a href="'.
-            route('login').
+        $response->assertDontSeeHtml('<a href="' .
+            route('login') .
             '"');
         $response->assertDontSee(ucfirst(__('actions.logmein')));
     });
