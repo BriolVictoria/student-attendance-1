@@ -16,8 +16,8 @@ it(
         // Assert
         $response->assertStatus(200);
         $response->assertSeeHtml(
-            '<form action="' .
-            route('login.store') .
+            '<form action="'.
+            route('login.store').
             '" method="post"'
         );
         $response->assertSee('Connexion à votre espace privé');
@@ -57,7 +57,7 @@ it(
         $authRoutes =
             collect(Route::getRoutes())
                 ->filter(
-                    fn($route) => in_array('auth', $route->gatherMiddleware())
+                    fn ($route) => in_array('auth', $route->gatherMiddleware())
                 );
 
         expect($authRoutes->count())
@@ -82,8 +82,8 @@ it(
 
         // Assert
         $response->assertSeeHtmlInOrder([
-            '<form action="' .
-            route('logout') .
+            '<form action="'.
+            route('logout').
             '" method="post"',
             '<input type="hidden" name="_token"',
             '<button type="submit"',
@@ -106,15 +106,15 @@ it(
     'displays a login link to a guest user on the home page',
     function () {
         $response = get(route('pages.home'));
-        $response->assertSeeHtml('<a href="' .
-            route('login') .
+        $response->assertSeeHtml('<a href="'.
+            route('login').
             '"');
         $response->assertSee(ucfirst(__('actions.logmein')));
 
         actingAs(User::factory()->create());
         $response = get(route('pages.home'));
-        $response->assertDontSeeHtml('<a href="' .
-            route('login') .
+        $response->assertDontSeeHtml('<a href="'.
+            route('login').
             '"');
         $response->assertDontSee(ucfirst(__('actions.logmein')));
     });

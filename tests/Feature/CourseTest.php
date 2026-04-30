@@ -42,3 +42,18 @@ test(
         $response->assertSeeInOrder([$dcs->name, $pw->name]);
         $response->assertDontSee($mmi->name);
     });
+test(
+    'a course has many lessons',
+    function () {
+
+        $daniel = User::factory()->create();
+        $mmi = Course::factory()
+            ->has(Lesson::factory()->count(5))
+            ->create([
+                'name' => 'Multimédia Interactif',
+                'code' => 'MMI',
+                'hours' => 60,
+                'user_id' => $daniel->id,
+            ]);
+        expect($mmi->lessons->count())->toBe(5);
+    });

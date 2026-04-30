@@ -54,7 +54,6 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/courses', [
         CourseController::class,
-        'index'
+        'index',
     ])->name('courses.index');
 });
-
