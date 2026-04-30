@@ -1,22 +1,21 @@
 <x-layout :title="$title">
     <h1>{{ $title }}</h1>
-    @if($students)
-    <form action="" method="POST">
-        <ol class="student-list">
-            @foreach($students as $student)
-            <li>
-                <input id="student-{{ $student->id }}"
-                       type="checkbox"
-                       name="students[]"
-                       value="{{ $student->id }}">
-                <label for="student-{{ $student->id }}">
-                    {{$student->first_name}} &nbsp;{{ $student->last_name }}
-                </label>
-            </li>
-            @endforeach
-        </ol>
-        <x-submit-button level="primary">{{ ucfirst(__('verbs.save')) }} {{ __('nouns.the_attendances') }}</x-submit-button>
-    </form>
+    @if ($students)
+        <form action="" method="POST">
+            <ol class="student-list">
+                @foreach ($students as $student)
+                    <li>
+                        <input id="student-{{ $student->id }}" type="checkbox" name="students[]"
+                            value="{{ $student->id }}">
+                        <label for="student-{{ $student->id }}">
+                            {{ $student->first_name }} &nbsp;{{ $student->last_name }}
+                        </label>
+                    </li>
+                @endforeach
+            </ol>
+            <x-submit-button level="primary">{{ ucfirst(__('verbs.save')) }}
+                {{ __('nouns.the_attendances') }}</x-submit-button>
+        </form>
     @endif
     <button class="randomStudentBtn hidden">Choisir un·e étudiant·e</button>
     <p class="currentStudent hidden"></p>

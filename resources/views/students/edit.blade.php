@@ -7,8 +7,8 @@
                 <form action="{{ route('students.destroy', $student) }}" method="post">
                     @csrf
                     @method('DELETE')
-                    <x-submit-button
-                        level="danger">{{ ucfirst(__('verbs.delete')) }} {{ $student->first_name }}</x-submit-button>
+                    <x-submit-button level="danger">{{ ucfirst(__('verbs.delete')) }}
+                        {{ $student->first_name }}</x-submit-button>
                 </form>
             </li>
         </ul>
@@ -20,30 +20,30 @@
         <div>
             <label for="first_name">Prénom <sup>*</sup></label>
             <input type="text" id="first_name" name="first_name" value="{{ $student->first_name }}"
-                   placeholder="{{ $student->first_name }}" required>
+                placeholder="{{ $student->first_name }}" required>
         </div>
         <div>
             <label for="last_name">Nom de famille <sup>*</sup></label>
             <input type="text" id="last_name" name="last_name" value="{{ $student->last_name }}"
-                   placeholder="{{ $student->last_name }}" required>
+                placeholder="{{ $student->last_name }}" required>
         </div>
         <div>
             <label for="matricule">Matricule <sup>*</sup></label>
             <input type="text" id="matricule" name="matricule" value="{{ $student->matricule }}"
-                   placeholder="{{ $student->matricule }}" required>
+                placeholder="{{ $student->matricule }}" required>
         </div>
         <div>
             <label for="email">Email <sup>*</sup></label>
             <input type="email" id="email" name="email" value="{{ $student->email }}"
-                   placeholder="{{ $student->email }}" required>
+                placeholder="{{ $student->email }}" required>
         </div>
         <div>
             <label for="profile_photo">Photo de profil</label>
             <input type="file" id="profile_photo" name="profile_photo">
         </div>
         <div>
-            <x-submit-button
-                level="primary">{{ ucfirst(__('verbs.save')) }} {{ __('nouns.the_student') }}</x-submit-button>
+            <x-submit-button level="primary">{{ ucfirst(__('verbs.save')) }}
+                {{ __('nouns.the_student') }}</x-submit-button>
         </div>
     </form>
 </x-layout>

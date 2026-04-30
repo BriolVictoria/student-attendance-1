@@ -3,7 +3,7 @@
     <form action="{{ route('login.store') }}" method="post">
         @csrf
         <x-input-with-label type="email" id="email" name="email" value=""
-                            placeholder="{{ __('form-placeholders.student_email') }}">
+            placeholder="{{ __('form-placeholders.student_email') }}">
             {{ ucfirst(__('form-labels.email')) }}
         </x-input-with-label>
         <x-input-with-label type="password" id="password" name="password" value="">

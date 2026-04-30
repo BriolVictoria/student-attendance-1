@@ -7,12 +7,11 @@
                 <a href="{{ route('students.edit', $student) }}">Modifier {{ $student->first_name }}</a>
             </li>
             <li>
-                <form action="{{ route('students.destroy', $student) }}"
-                      method="post"
-                >
+                <form action="{{ route('students.destroy', $student) }}" method="post">
                     @csrf
                     @method('DELETE')
-                    <x-submit-button level="danger">{{ ucfirst(__('verbs.delete')) }} {{ $student->first_name }}</x-submit-button>
+                    <x-submit-button level="danger">{{ ucfirst(__('verbs.delete')) }}
+                        {{ $student->first_name }}</x-submit-button>
                 </form>
             </li>
         </ul>

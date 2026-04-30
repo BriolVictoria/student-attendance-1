@@ -5,7 +5,7 @@
         <ol>
             @foreach ($students as $student)
                 <li>
-                    <a href="{{ route('students.show',$student) }}">
+                    <a href="{{ route('students.show', $student) }}">
                         {{ $student->first_name }}&nbsp;{{ $student->last_name }}
                     </a>
                 </li>
