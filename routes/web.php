@@ -1,59 +1,9 @@
 <?php
 
-use App\Http\Controllers\AttendanceController;
-use App\Http\Controllers\CourseController;
-use App\Http\Controllers\PageController;
-use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [
-    PageController::class,
-    'home',
-])->name('pages.home');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/presences', [
-        AttendanceController::class,
-        'index',
-    ])->name('attendances.index');
-
-    Route::get('/etudiants', [
-        StudentController::class,
-        'index',
-    ])->name('students.index');
-
-    Route::post('/etudiants', [
-        StudentController::class,
-        'store',
-    ])->name('students.store');
-
-    Route::get('/etudiants/create', [
-        StudentController::class,
-        'create',
-    ])->name('students.create');
-
-    Route::get('/etudiants/{student}', [
-        StudentController::class,
-        'show',
-    ])->name('students.show');
-
-    Route::get('/etudiants/{student}/edit', [
-        StudentController::class,
-        'edit',
-    ])->name('students.edit');
-
-    Route::put('/etudiants/{student}', [
-        StudentController::class,
-        'update',
-    ])->name('students.update');
-
-    Route::delete('/etudiants/{student}', [
-        StudentController::class,
-        'destroy',
-    ])->name('students.destroy');
-
-    Route::get('/courses', [
-        CourseController::class,
-        'index',
-    ])->name('courses.index');
-});
+Route::view('/', 'home', ['title' => 'Gestion des présences']);
+Route::view('/logincreate', 'auth.logincreate', ['title' => 'Gestion des présences']);
+Route::view('/courses', 'courses.index', ['title' => 'Gestion des présences']);
+Route::view('/courses/{course}', 'courses.show', ['title' => 'Gestion des présences']);
+Route::view('/lessons/{lesson}/attendances', 'attendances.edit', ['title' => 'Gestion des présences']);

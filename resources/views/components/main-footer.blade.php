@@ -1,6 +1,3 @@
-<footer {{ $attributes->class(['page-footer']) }}>
-    <p>
-        <time datetime="2025">2025</time>
-        - <abbr title="Système de gestion de contenus">SGC</abbr>
-    </p>
-</footer>
+  <footer class="site-footer">
+      <p>Application de démonstration<span class="site-footer__separator">•</span>Version 1.0</p>
+  </footer>

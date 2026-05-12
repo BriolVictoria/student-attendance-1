@@ -1,357 +1,941 @@
-/*** RESET GLOBAL + VARIABLES CSS ***/
-/* --- RESET GLOBAL --- */
-*:where(:not(html, iframe, canvas, img, svg, video, audio):not(svg *, symbol *)) {
-    all: unset;
-    display: revert;
+/* =============================================================================
+   app.css — Gestion de Présence Scolaire
+   Convention : BEM (Block__Element--Modifier)
+   Pas de framework. Classes sémantiques réutilisables.
+   Max-width : 960px centré.
+   ============================================================================= */
+
+
+/* =============================================================================
+   1. CUSTOM PROPERTIES (design tokens)
+   ============================================================================= */
+
+:root {
+  /* Couleurs */
+  --color-bg:           #f7f7f8;
+  --color-surface:      #ffffff;
+  --color-border:       #e5e5e7;
+  --color-border-focus: #1a1a1a;
+
+  --color-text-primary:   #1a1a1a;
+  --color-text-secondary: #555558;
+  --color-text-muted:     #9a9aa0;
+
+  --color-accent:       #1a1a1a;
+  --color-accent-fg:    #ffffff;
+
+  --color-present-bg:   #f0faf0;
+  --color-present-text: #22863a;
+  --color-present-border: #b7e4c7;
+
+  --color-absent-bg:    #fff0f0;
+  --color-absent-text:  #d73a49;
+  --color-absent-border: #f5c6cb;
+
+  --color-late-bg:      #fff8ee;
+  --color-late-text:    #d07000;
+  --color-late-border:  #ffd591;
+
+  --color-excused-bg:   #eef4ff;
+  --color-excused-text: #0550ae;
+  --color-excused-border: #c0d7ff;
+
+  /* Typographie */
+  --font-family:   -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-size-xs:  0.75rem;   /* 12px */
+  --font-size-sm:  0.875rem;  /* 14px */
+  --font-size-md:  1rem;      /* 16px */
+  --font-size-lg:  1.125rem;  /* 18px */
+  --font-size-xl:  1.5rem;    /* 24px */
+  --font-size-2xl: 2rem;      /* 32px */
+
+  --font-weight-normal:    400;
+  --font-weight-semibold:  600;
+  --font-weight-bold:      700;
+
+  --line-height-tight:  1.25;
+  --line-height-normal: 1.5;
+
+  /* Espacements */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+
+  /* Rayons */
+  --radius-sm:  0.375rem;
+  --radius-md:  0.75rem;
+  --radius-lg:  1rem;
+  --radius-xl:  1.25rem;
+  --radius-full: 9999px;
+
+  /* Ombres */
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.07), 0 1px 2px rgba(0, 0, 0, 0.04);
+
+  /* Layout */
+  --layout-max-width: 60rem;
+  --layout-padding:   var(--space-6);
 }
 
+
+/* =============================================================================
+   2. RESET & BASE
+   ============================================================================= */
+
 *, *::before, *::after {
-    box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 html {
-    scroll-behavior: smooth;
-    -moz-text-size-adjust: none;
-    -webkit-text-size-adjust: none;
-    text-size-adjust: none;
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
 }
 
-a, button {
-    cursor: revert;
-}
-
-ol, ul, menu, summary {
-    list-style: none;
-}
-
-ol {
-    counter-reset: revert;
-}
-
-img {
-    max-block-size: 100%;
-    max-inline-size: 100%;
-}
-
-table {
-    border-collapse: collapse;
-}
-
-input, textarea {
-    -webkit-user-select: auto;
-}
-
-textarea {
-    white-space: revert;
-}
-
-meter {
-    -webkit-appearance: revert;
-    appearance: revert;
-}
-
-:where(pre) {
-    all: revert;
-    box-sizing: border-box;
-}
-
-::placeholder {
-    color: lightgray;
-}
-
-:where([hidden]) {
-    display: none;
-}
-
-:where([contenteditable]:not([contenteditable="false"])) {
-    -webkit-line-break: after-white-space;
-    overflow-wrap: break-word;
-    -moz-user-modify: read-write;
-    -webkit-user-modify: read-write;
-    -webkit-user-select: auto;
-}
-
-:where([draggable="true"]) {
-    -webkit-user-drag: element;
-}
-
-:where(dialog:modal) {
-    all: revert;
-    box-sizing: border-box;
-}
-
-::-webkit-details-marker {
-    display: none;
-}
-
-/* --- VARIABLES GLOBALES --- */
-:root {
-    --radius: 6px;
-    --space-lg: 2rem;
-    --color-light: #f5f5f5;
-    --font-main: "Helvetica Neue", Arial, sans-serif;
-    --space-md: 1rem;
-    --color-primary: #194fc6;
-    --color-secondary: #222;
-    --font-size-base: 16px;
-    --font-size-h1: 2rem;
-    --font-size-h2: 1.2rem;
-    --space-sm: 0.5rem;
-    --transition-speed: 0.3s;
-    --color-text: #222;
-    --color-text-light: #fff;
-    --space-xs: 0.25rem;
-}
-
-/* --- STYLES PRINCIPAUX --- */
 body {
-    background-color: var(--color-light);
-    font-family: var(--font-main);
-    margin: 0;
-    padding: 0;
-}
-
-header {
-    background-color: var(--color-primary);
-    color: var(--color-text-light);
-    font-size: var(--font-size-h1);
-    padding: var(--space-lg) 0;
-    text-align: center;
-}
-
-main {
-    background-color: var(--color-text-light);
-    border-radius: var(--radius);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    margin: var(--space-lg) auto;
-    padding: var(--space-lg);
-    width: clamp(300px, 90%, 700px);
-}
-
-main h1 {
-    font-size: 1.5rem;
-    margin-bottom: 2rem;
-}
-
-ul.student-list {
-    list-style: none;
-    padding: 0;
-}
-
-ul.student-list li {
-    align-items: center;
-    display: flex;
-    margin: var(--space-sm) 0;
-}
-
-ul.student-list label {
-    cursor: pointer;
-    flex: 1;
-}
-
-label {
-    font-weight: 500;
-}
-
-label:not(:has(+input)) {
-    cursor: pointer;
-    font-weight: 400;
-}
-
-input:not([type=file]) {
-    border: 1px solid lightgray;
-    border-radius: var(--radius);
-    box-shadow: rgba(0, 0, 0, 0.05) 0 0 5px;
-    padding: var(--space-sm);
-}
-
-input[type="checkbox"] {
-    all: revert; /* réapplique le style natif du navigateur */
-    cursor: pointer;
-    margin-right: var(--space-sm);
-    transform: scale(1.2);
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-md);
-}
-
-form > div {
-    align-items: baseline;
-    display: flex;
-    gap: var(--space-md);
-}
-
-button {
-    background-color: var(--color-primary);
-    border: none;
-    border-radius: var(--radius);
-    color: var(--color-text-light);
-    cursor: pointer;
-    display: inline-block;
-    font-size: var(--font-size-base);
-    font-weight: bold;
-    margin-top: var(--space-lg);
-    padding: var(--space-md);
-    transition: background-color var(--transition-speed) ease;
-}
-
-button:hover {
-    background-color: var(--color-primary);
-}
-
-div:has(>.action) {
-    margin-top: var(--space-lg);
-}
-
-dl {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-dt {
-    font-weight: bold;
-}
-
-.action {
-    background-color: var(--color-primary);
-    border-radius: var(--radius);
-    color: white;
-    font-weight: bold;
-    padding: var(--space-md);
-}
-
-.hidden {
-    border: 0;
-    clip: rect(0 0 0 0);
-    clip-path: inset(50%);
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    padding: 0;
-    position: absolute !important;
-    white-space: nowrap;
-    width: 1px;
-}
-
-.currentStudent {
-    border: 1px solid var(--color-primary);
-    border-radius: var(--radius);
-    color: var(--color-primary);;
-    margin-top: var(--space-lg);
-    padding: var(--space-md);
-}
-
-.layout {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
-
-/* ordre visuel : nav remonte AVANT tout */
-.page-nav {
-    order: -1;
-}
-
-/* header */
-.page-header {
-    background: var(--color-primary);
-    color: var(--color-text-light);
-    padding: var(--space-lg) 0;
-    text-align: center;
-}
-
-.page-header h1 {
-    font-size: var(--font-size-h1);
-    margin: 0;
-}
-
-/* main */
-.page-main {
-    flex-grow: 1;
-}
-
-.page-footer {
-    color: var(--color-secondary);
-    font-size: 0.9rem;
-    padding: var(--space-md);
-    text-align: center;
-}
-
-.page-nav {
-    background: var(--color-primary);
-}
-
-.page-nav ul {
-    display: flex;
-    gap: var(--space-md);
-    justify-content: center;
-    margin: 0;
-    padding: 0;
-}
-
-.page-nav a {
-    border-radius: var(--radius);
-    color: var(--color-text-light);
-    display: block;
-    margin: var(--space-sm) var(--space-lg);
-    padding: var(--space-md) var(--space-lg);
-    text-decoration: none;
-    transition: background-color var(--transition-speed);
-}
-
-.page-nav a:hover {
-    background-color: rgba(255, 255, 255, 0.15);
-}
-
-.page-nav a.active {
-    background-color: rgba(255, 255, 255, 0.25);
-    font-weight: bold;
-}
-
-.resource-actions {
-    margin-block-end: 2rem;
-}
-
-
-.sr-only {
-    border: 0 !important;
-    clip: rect(1px, 1px, 1px, 1px) !important;
-    -webkit-clip-path: inset(50%) !important;
-    clip-path: inset(50%) !important;
-    height: 1px !important;
-    overflow: hidden !important;
-    padding: 0 !important;
-    position: absolute !important;
-    white-space: nowrap !important;
-    width: 1px !important;
+  font-family: var(--font-family);
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-normal);
+  color: var(--color-text-primary);
+  background-color: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
 }
 
 a {
-    text-decoration: underline;
-
-    &:hover {
-        text-decoration-thickness: .1em;
-    }
+  color: inherit;
+  text-decoration: none;
 }
 
-.alert {
-    font-weight: bold;
-    padding: var(--space-sm);
-    border-radius: var(--radius);
-    border-style: solid;
-    border-width: 1px;
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
 }
 
-.alert-warning {
-    background-color: rgb(255,160,100);
-    border-color: rgb(235,140,80);
+ul, ol {
+  list-style: none;
 }
 
-.alert-danger {
-    background-color: rgb(255,20,20);
-    border-color: rgb(255,80,80);
+img, svg {
+  display: block;
+}
+
+
+/* =============================================================================
+   3. LAYOUT — conteneur principal
+   ============================================================================= */
+
+/* Conteneur centré universel */
+.container {
+  width: 100%;
+  max-width: var(--layout-max-width);
+  margin-inline: auto;
+  padding-inline: var(--layout-padding);
+}
+
+/* Variante pleine hauteur (login) */
+.page--centered {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-8) var(--layout-padding);
+}
+
+/* Variante page standard (fond gris, padding vertical) */
+.page--standard {
+  min-height: 100vh;
+}
+
+
+/* =============================================================================
+   4. COMPOSANT : app-logo
+   Bloc réutilisable : icône de l'application
+   ============================================================================= */
+
+.app-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  background-color: var(--color-accent);
+  border-radius: var(--radius-xl);
+  flex-shrink: 0;
+}
+
+.app-logo__icon {
+  width: 32px;
+  height: 32px;
+  color: var(--color-accent-fg);
+}
+
+/* Taille réduite (ex: dans le header) */
+.app-logo--sm {
+  width: 40px;
+  height: 40px;
+}
+
+.app-logo--sm .app-logo__icon {
+  width: 20px;
+  height: 20px;
+}
+
+
+/* =============================================================================
+   5. COMPOSANT : site-header
+   Header de navigation principal (pages authentifiées)
+   ============================================================================= */
+
+.site-header {
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  padding-block: var(--space-4);
+}
+
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.site-header__identity {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.site-header__title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+}
+
+.site-header__subtitle {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.site-header__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+
+/* =============================================================================
+   6. COMPOSANT : page-header
+   En-tête de section (sous le site-header ou en haut d'une page publique)
+   ============================================================================= */
+
+.page-header {
+  padding-block: var(--space-6);
+}
+
+.page-header__back {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-4);
+  transition: color 0.15s ease;
+}
+
+.page-header__back:hover {
+  color: var(--color-text-primary);
+}
+
+.page-header__back-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.page-header__title {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+}
+
+.page-header__meta {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin-top: var(--space-1);
+}
+
+/* Variante : titre centré (welcome page) */
+.page-header--centered {
+  text-align: center;
+}
+
+.page-header--centered .page-header__title {
+  font-size: var(--font-size-2xl);
+}
+
+.page-header--centered .page-header__meta {
+  font-size: var(--font-size-md);
+  max-width: 480px;
+  margin-inline: auto;
+  margin-top: var(--space-3);
+}
+
+
+/* =============================================================================
+   7. COMPOSANT : section-header
+   Titre + sous-titre d'une section de contenu
+   ============================================================================= */
+
+.section-header {
+  margin-bottom: var(--space-6);
+}
+
+.section-header__title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+}
+
+.section-header__subtitle {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin-top: var(--space-1);
+}
+
+
+/* =============================================================================
+   8. COMPOSANT : card
+   Carte de base réutilisable
+   ============================================================================= */
+
+.card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-card);
+}
+
+/* Carte cliquable (lien) */
+.card--link {
+  display: block;
+  transition: box-shadow 0.15s ease, border-color 0.15s ease;
+  cursor: pointer;
+}
+
+.card--link:hover {
+  border-color: #c0c0c4;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Carte mise en évidence (prochaine séance) */
+.card--highlighted {
+  border-color: var(--color-accent);
+  border-width: 2px;
+}
+
+/* Carte compacte */
+.card--compact {
+  padding: var(--space-4);
+}
+
+/* Carte info (fond gris — ex: bloc demo credentials) */
+.card--info {
+  background-color: var(--color-bg);
+  box-shadow: none;
+}
+
+
+/* =============================================================================
+   9. COMPOSANT : feature-card
+   Carte de fonctionnalité (welcome page)
+   ============================================================================= */
+
+.feature-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.feature-card__icon-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background-color: var(--color-bg);
+  border-radius: var(--radius-md);
+  flex-shrink: 0;
+}
+
+.feature-card__icon {
+  width: 24px;
+  height: 24px;
+  color: var(--color-text-primary);
+}
+
+.feature-card__title {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+}
+
+.feature-card__description {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-normal);
+}
+
+
+/* =============================================================================
+   10. COMPOSANT : course-card
+   Carte d'un cours (liste des cours)
+   ============================================================================= */
+
+.course-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.course-card__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.course-card__icon-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background-color: var(--color-bg);
+  border-radius: var(--radius-md);
+  flex-shrink: 0;
+}
+
+.course-card__icon {
+  width: 22px;
+  height: 22px;
+  color: var(--color-text-secondary);
+}
+
+.course-card__code {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-secondary);
+  background-color: var(--color-bg);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
+  letter-spacing: 0.04em;
+}
+
+.course-card__title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+}
+
+.course-card__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.course-card__level {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.course-card__students {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.course-card__students-icon {
+  width: 16px;
+  height: 16px;
+}
+
+
+/* =============================================================================
+   11. COMPOSANT : lesson-card
+   Carte d'une leçon (planning)
+   ============================================================================= */
+
+.lesson-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.lesson-card__badge {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  background-color: var(--color-accent);
+  color: var(--color-accent-fg);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-sm);
+}
+
+.lesson-card__title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+}
+
+.lesson-card__details {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  flex-wrap: wrap;
+}
+
+.lesson-card__detail {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.lesson-card__detail-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+
+/* =============================================================================
+   12. COMPOSANT : stat-card
+   Carte de statistique (feuille d'appel)
+   ============================================================================= */
+
+.stat-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.stat-card__value {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  line-height: 1;
+}
+
+.stat-card__label {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+
+/* =============================================================================
+   13. COMPOSANT : stats-bar
+   Ligne de 4 stat-cards (feuille d'appel)
+   ============================================================================= */
+
+.stats-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+@media (max-width: 600px) {
+  .stats-bar {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+
+/* =============================================================================
+   14. COMPOSANT : student-row
+   Ligne étudiant dans la feuille d'appel
+   ============================================================================= */
+
+.student-row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-5);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+.student-row__name {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+}
+
+.student-row__actions {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-2);
+}
+
+@media (max-width: 480px) {
+  .student-row__actions {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+
+/* =============================================================================
+   15. COMPOSANT : attendance-btn
+   Bouton de statut de présence (présent/absent/retard/excusé)
+   ============================================================================= */
+
+.attendance-btn {
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-normal);
+  color: var(--color-text-secondary);
+  background-color: var(--color-surface);
+  text-align: center;
+  transition: background-color 0.1s ease, border-color 0.1s ease, color 0.1s ease;
+  cursor: pointer;
+}
+
+.attendance-btn:hover {
+  border-color: #b0b0b6;
+  color: var(--color-text-primary);
+}
+
+/* États actifs */
+.attendance-btn--present {
+  background-color: var(--color-present-bg);
+  border-color: var(--color-present-border);
+  color: var(--color-present-text);
+  font-weight: var(--font-weight-semibold);
+}
+
+.attendance-btn--absent {
+  background-color: var(--color-absent-bg);
+  border-color: var(--color-absent-border);
+  color: var(--color-absent-text);
+  font-weight: var(--font-weight-semibold);
+}
+
+.attendance-btn--late {
+  background-color: var(--color-late-bg);
+  border-color: var(--color-late-border);
+  color: var(--color-late-text);
+  font-weight: var(--font-weight-semibold);
+}
+
+.attendance-btn--excused {
+  background-color: var(--color-excused-bg);
+  border-color: var(--color-excused-border);
+  color: var(--color-excused-text);
+  font-weight: var(--font-weight-semibold);
+}
+
+
+/* =============================================================================
+   16. COMPOSANT : btn
+   Bouton générique
+   ============================================================================= */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  white-space: nowrap;
+  transition: opacity 0.15s ease, background-color 0.15s ease;
+  cursor: pointer;
+}
+
+/* Primaire (noir) */
+.btn--primary {
+  background-color: var(--color-accent);
+  color: var(--color-accent-fg);
+  border: 1px solid var(--color-accent);
+}
+
+.btn--primary:hover {
+  opacity: 0.85;
+}
+
+/* Secondaire (outline) */
+.btn--secondary {
+  background-color: var(--color-surface);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border);
+}
+
+.btn--secondary:hover {
+  border-color: #b0b0b6;
+}
+
+/* Pleine largeur */
+.btn--full {
+  width: 100%;
+}
+
+.btn__icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+
+/* =============================================================================
+   17. COMPOSANT : form-field
+   Groupe label + input
+   ============================================================================= */
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.form-field__label {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+}
+
+.form-field__input {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-family: inherit;
+  font-size: var(--font-size-md);
+  color: var(--color-text-primary);
+  background-color: var(--color-bg);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  outline: none;
+}
+
+.form-field__input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.form-field__input:focus {
+  border-color: var(--color-border-focus);
+  background-color: var(--color-surface);
+  box-shadow: 0 0 0 3px rgba(26, 26, 26, 0.08);
+}
+
+.form-field__error {
+  font-size: var(--font-size-xs);
+  color: var(--color-absent-text);
+}
+
+
+/* =============================================================================
+   18. COMPOSANT : login-box
+   Panneau centré de connexion
+   ============================================================================= */
+
+.login-box {
+  width: 100%;
+  max-width: 440px;
+}
+
+.login-box__logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: var(--space-6);
+}
+
+.login-box__form-card {
+  /* Utilise .card comme base, enrichi ici */
+}
+
+.login-box__header {
+  text-align: center;
+  margin-bottom: var(--space-6);
+}
+
+.login-box__title {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+}
+
+.login-box__subtitle {
+  font-size: var(--font-size-md);
+  color: var(--color-text-secondary);
+  margin-top: var(--space-2);
+}
+
+.login-box__fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  margin-bottom: var(--space-6);
+}
+
+.login-box__hint {
+  margin-top: var(--space-4);
+}
+
+.login-box__hint-title {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--space-2);
+}
+
+.login-box__hint-text {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  font-family: monospace;
+  line-height: var(--line-height-normal);
+}
+
+.login-box__footer {
+  text-align: center;
+  margin-top: var(--space-5);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+
+/* =============================================================================
+   19. COMPOSANT : attendance-header
+   En-tête de la feuille d'appel (titre + meta ligne)
+   ============================================================================= */
+
+.attendance-header {
+  padding-block: var(--space-5);
+}
+
+.attendance-header__back {
+  /* Réutilise .page-header__back */
+}
+
+.attendance-header__lesson-title {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+}
+
+.attendance-header__course-name {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin-top: var(--space-1);
+}
+
+.attendance-header__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  flex-wrap: wrap;
+  padding-block: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  margin-top: var(--space-2);
+}
+
+/* Réutilise .lesson-card__detail pour les icônes meta */
+
+
+/* =============================================================================
+   20. COMPOSANT : attendance-list
+   En-tête de section + liste d'étudiants
+   ============================================================================= */
+
+.attendance-list__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
+}
+
+.attendance-list__title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+}
+
+.attendance-list__items {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+
+/* =============================================================================
+   21. COMPOSANT : card-grid
+   Grille de cards (courses, features)
+   ============================================================================= */
+
+.card-grid {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.card-grid--2col {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.card-grid--3col {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+@media (max-width: 700px) {
+  .card-grid--2col,
+  .card-grid--3col {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* =============================================================================
+   22. COMPOSANT : site-footer
+   Pied de page minimal
+   ============================================================================= */
+
+.site-footer {
+  text-align: center;
+  padding-block: var(--space-8);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.site-footer__separator {
+  margin-inline: var(--space-2);
+}
+
+
+/* =============================================================================
+   23. UTILITAIRES
+   Garder cette section courte — préférer les composants BEM
+   ============================================================================= */
+
+/* Séparateur visuel */
+.divider {
+  border: none;
+  border-top: 1px solid var(--color-border);
+}
+
+/* Espacement vertical entre sections */
+.section-gap {
+  padding-block: var(--space-8);
+}
+
+.section-gap--sm {
+  padding-block: var(--space-6);
 }
