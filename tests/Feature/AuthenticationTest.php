@@ -18,7 +18,7 @@ it(
         $response->assertSeeHtml(
             '<form action="'.
             route('login.store').
-            '" method="post"'
+            '" method="POST"'
         );
         $response->assertSee('Connexion à votre espace privé');
         $response->assertSeeHtmlInOrder([
@@ -78,13 +78,13 @@ it(
         actingAs(User::factory()->create());
 
         // Act
-        $response = get(route('students.index'));
+        $response = get(route('courses.index'));
 
         // Assert
         $response->assertSeeHtmlInOrder([
             '<form action="'.
             route('logout').
-            '" method="post"',
+            '" method="POST"',
             '<input type="hidden" name="_token"',
             '<button type="submit"',
         ]);
@@ -109,12 +109,12 @@ it(
         $response->assertSeeHtml('<a href="'.
             route('login').
             '"');
-        $response->assertSee(ucfirst(__('actions.logmein')));
+        $response->assertSee('Se connecter');
 
         actingAs(User::factory()->create());
         $response = get(route('pages.home'));
         $response->assertDontSeeHtml('<a href="'.
             route('login').
             '"');
-        $response->assertDontSee(ucfirst(__('actions.logmein')));
+        $response->assertDontSee('Se connecter');
     });
