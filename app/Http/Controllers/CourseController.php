@@ -2,18 +2,33 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course;
 use function auth;
+use function compact;
+use function view;
 
 class CourseController extends Controller
 {
     public function index()
     {
         $title = ucfirst(__('headings.my-courses'));
-        $courses = auth()->user()->courses()->orderBy('name')->get();
+        $user = auth()->user()->load([
+            'courses' => function ($query) {
+                $query->withCount('students');
+            }]);
 
         return view(
             'courses.index',
-            compact('courses', 'title')
+            compact('user', 'title')
+        );
+    }
+
+    public function show(Course $course)
+    {
+        $title = $course->name;
+        return view(
+            'courses.show',
+            compact('course', 'title')
         );
     }
 }

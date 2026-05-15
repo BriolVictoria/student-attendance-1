@@ -1,4 +1,4 @@
-<form action="/login" method="POST" novalidate>
+<form action="{{ route('login.store') }}" method="POST" novalidate>
     @csrf
     <div class="login-box__fields">
         <x-input-with-label id="email" name="email" type="email" value=""
