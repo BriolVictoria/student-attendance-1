@@ -10,5 +10,6 @@ Route::middleware('auth')->group(function () {
         ->name('courses.index');
     Route::get('/courses/{course}', [CourseController::class, 'show'])
         ->name('courses.show');
-    Route::view('/lessons/{lesson}/attendances', 'attendances.edit', ['title' => 'Gestion des présences']);
+    Route::view('/lessons/{lesson}/attendances', 'attendances.edit', ['title' => 'Gestion des présences'])
+        ->name('attendances.edit');
 });

@@ -18,10 +18,15 @@ class LessonFactory extends Factory
      */
     public function definition(): array
     {
-        $starts_at = CarbonImmutable::now()->addDays(random_int(10, 100));
+        $starts_at = CarbonImmutable::now()
+            ->addDays(random_int(10, 100))
+            ->startOfDay()
+            ->addHours(8)
+            ->addMinutes(random_int(0, 10) * 30);
         $ends_at = $starts_at->addHours(random_int(1, 6));
 
         return [
+            'name' => fake()->bothify('????-##-??'),
             'starts_at' => $starts_at,
             'ends_at' => $ends_at,
         ];

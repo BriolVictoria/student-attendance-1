@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+
 use function auth;
 use function compact;
 use function view;
@@ -26,6 +27,8 @@ class CourseController extends Controller
     public function show(Course $course)
     {
         $title = $course->name;
+        $course->load(['lessons' => fn ($query) => $query->orderBy('starts_at', 'asc')]);
+
         return view(
             'courses.show',
             compact('course', 'title')

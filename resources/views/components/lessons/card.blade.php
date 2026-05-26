@@ -1,18 +1,17 @@
-@props(['lesson'])
-<a href="/lessons/1" class="card card--link card--highlighted lesson-card">
-    <span class="lesson-card__badge">Prochaine séance</span>
-    {{-- {{ $lesson->title }} --}}
-    <h3 class="lesson-card__title">Analyse complexe</h3>
+@props(['lesson', 'isNext' => false])
+<a href="{{ route('attendances.edit', $lesson) }}" class="card card--link card--highlighted lesson-card">
+    @if ($isNext)
+        <span class="lesson-card__badge">Prochaine séance</span>
+    @endif
+    <h3 class="lesson-card__title">{{ $lesson->name }}</h3>
     <div class="lesson-card__details">
         <span class="lesson-card__detail">
             <x-svg.calendar />
-            {{-- {{ $lesson->date->isoFormat('dddd D MMMM') }} --}}
-            mardi 21 avril
+            {{ $lesson->starts_at->isoFormat('dddd D MMMM') }}
         </span>
         <span class="lesson-card__detail">
             <x-svg.clock />
-            {{-- {{ $lesson->start_time }} - {{ $lesson->end_time }} --}}
-            14:00 - 16:00
+            {{ $lesson->starts_at->isoFormat('HH-mm') }} - {{ $lesson->ends_at->isoFormat('HH-mm') }}
         </span>
         <span class="lesson-card__detail">
             <x-svg.room />
