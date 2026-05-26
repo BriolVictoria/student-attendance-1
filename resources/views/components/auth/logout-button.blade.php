@@ -2,6 +2,6 @@
     @csrf
     <button type="submit" class="btn btn--secondary">
         <x-svg.logout />
-        {{ ucfirst(__('forms.labels-logout')) }}
+        {{ ucfirst(__('form-labels.logout')) }}
     </button>
 </form>

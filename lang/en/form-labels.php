@@ -6,4 +6,5 @@ return [
     'email' => 'adresse email',
     'matricule' => 'matricule',
     'birth_date' => 'date de naissance',
+    'logout' => 'logout',
 ];

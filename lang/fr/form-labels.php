@@ -7,4 +7,5 @@ return [
     'matricule' => 'matricule (10 chiffres)',
     'birth_date' => 'date de naissance',
     'password' => 'mot de passe',
+    'logout' => 'quitter',
 ];
