@@ -15,7 +15,9 @@ class CourseController extends Controller
         $title = ucfirst(__('headings.my-courses'));
         $user = auth()->user()->load([
             'courses' => function ($query) {
-                $query->withCount('students');
+                $query
+                    ->orderBy('name', 'asc')
+                    ->withCount('students');
             }]);
 
         return view(

@@ -43,6 +43,7 @@ test('an authenticated user sees his courses after he logs in',
         $response->assertSeeInOrder([$dcs->name, $pw->name]);
         $response->assertDontSee($mmi->name);
     });
+
 test('a course has many lessons',
     function () {
 
